@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h2 class="text-center fw-bold my-5 text-primary">Cart</h2>
+    <div id="result" class="container" style="display: flex; justify-content: center;  flex-wrap: wrap;">
+
+    </div>
+
+    <script>
+
+        fetch('https://dummyjson.com/carts')
+            .then((data) => data.json())
+            .then((res) => {
+                console.log(res.carts);
+                displayData(res);
+            });
+
+        function displayData(data) {
+            for (let i of data.carts) {
+                for (let product of i.products) {
+                    console.log(product);
+                    let htmlData = `
+                <div class="fw-bold card shadow border border-1 m-3  " style="width: 18rem;">
+                   <ul class="list-group d-flex flex-column  list-group-flush">
+                     <li class=" list-group-item py-5"><img width="100%" src="https://th.bing.com/th/id/OIP.FJopfLMgNtp5uaSzx9eP0wHaG2?pid=ImgDet&rs=1"/><h5 class="text-center fw-bold">${product.title}</h5></li>
+                     <li class=" list-group-item">ID : ${product.id}</li>
+                     <li class=" list-group-item">Price : ${product.price}</li>
+                     <li class=" list-group-item">Quantity : ${product.quantity}</li>
+                     <li class="list-group-item">discountedPrice : ${product.discountedPrice}</li>
+                     <li class="list-group-item text-center"><button class="btn btn-primary rounded-pill">Add To Cart</button></li>
+                   </ul>
+                </div>
+                `;
+
+                    document.getElementById('result').innerHTML += htmlData;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
